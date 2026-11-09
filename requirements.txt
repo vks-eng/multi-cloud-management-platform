@@ -1,0 +1,2 @@
+# CloudOrbit backend dependencies (see backend/ for dev and cloud-SDK extras)
+-r backend/requirements.txt

@@ -1,0 +1,279 @@
+# Generated from pyproject.toml with: uv pip compile pyproject.toml --extra cloud -o requirements-cloud.txt
+# Install: pip install -r requirements-cloud.txt
+alembic==1.20.1
+    # via mcmp-backend (pyproject.toml)
+amqp==5.4.2
+    # via kombu
+annotated-doc==0.0.5
+    # via fastapi
+annotated-types==0.8.0
+    # via pydantic
+anyio==4.16.0
+    # via
+    #   starlette
+    #   watchfiles
+azure-core==1.41.0
+    # via
+    #   azure-identity
+    #   azure-mgmt-core
+azure-identity==1.27.0
+    # via mcmp-backend (pyproject.toml)
+azure-mgmt-compute==39.0.0
+    # via mcmp-backend (pyproject.toml)
+azure-mgmt-core==1.6.0
+    # via
+    #   azure-mgmt-compute
+    #   azure-mgmt-resource
+    #   azure-mgmt-storage
+azure-mgmt-resource==26.0.0
+    # via mcmp-backend (pyproject.toml)
+azure-mgmt-storage==25.3.0
+    # via mcmp-backend (pyproject.toml)
+bcrypt==5.0.0
+    # via mcmp-backend (pyproject.toml)
+billiard==4.3.2
+    # via celery
+boto3==1.43.126
+    # via mcmp-backend (pyproject.toml)
+botocore==1.43.126
+    # via
+    #   boto3
+    #   s3transfer
+celery==5.7.0
+    # via mcmp-backend (pyproject.toml)
+certifi==2026.10.23
+    # via requests
+cffi==2.1.1
+    # via cryptography
+charset-normalizer==3.5.2
+    # via requests
+click==8.5.1
+    # via
+    #   celery
+    #   click-didyoumean
+    #   click-plugins
+    #   click-repl
+    #   uvicorn
+click-didyoumean==0.3.1
+    # via celery
+click-plugins==1.1.1.2
+    # via celery
+click-repl==0.4.1
+    # via celery
+cryptography==50.0.2
+    # via
+    #   mcmp-backend (pyproject.toml)
+    #   azure-identity
+    #   google-auth
+    #   msal
+    #   pyjwt
+dnspython==2.9.2
+    # via email-validator
+email-validator==2.3.0
+    # via mcmp-backend (pyproject.toml)
+fastapi==0.162.2
+    # via mcmp-backend (pyproject.toml)
+google-api-core==2.44.0
+    # via
+    #   google-cloud-compute
+    #   google-cloud-core
+    #   google-cloud-resource-manager
+    #   google-cloud-storage
+google-auth==2.62.1
+    # via
+    #   google-api-core
+    #   google-cloud-compute
+    #   google-cloud-core
+    #   google-cloud-resource-manager
+    #   google-cloud-storage
+google-cloud-compute==1.57.0
+    # via mcmp-backend (pyproject.toml)
+google-cloud-core==2.8.0
+    # via google-cloud-storage
+google-cloud-resource-manager==1.19.0
+    # via mcmp-backend (pyproject.toml)
+google-cloud-storage==3.17.1
+    # via mcmp-backend (pyproject.toml)
+google-crc32c==1.9.0
+    # via
+    #   google-cloud-storage
+    #   google-resumable-media
+google-resumable-media==2.11.0
+    # via google-cloud-storage
+googleapis-common-protos==1.76.0
+    # via
+    #   google-api-core
+    #   grpc-google-iam-v1
+    #   grpcio-status
+grpc-google-iam-v1==0.14.6
+    # via google-cloud-resource-manager
+grpcio==1.85.1
+    # via
+    #   google-api-core
+    #   google-cloud-compute
+    #   google-cloud-resource-manager
+    #   googleapis-common-protos
+    #   grpc-google-iam-v1
+    #   grpcio-status
+grpcio-status==1.85.1
+    # via google-api-core
+h11==0.16.0
+    # via uvicorn
+httptools==0.9.0
+    # via uvicorn
+idna==3.20
+    # via
+    #   anyio
+    #   email-validator
+    #   requests
+isodate==0.7.2
+    # via
+    #   azure-mgmt-compute
+    #   azure-mgmt-resource
+    #   azure-mgmt-storage
+jinja2==3.1.6
+    # via mcmp-backend (pyproject.toml)
+jmespath==1.1.0
+    # via
+    #   boto3
+    #   botocore
+kombu==5.7.0
+    # via celery
+mako==1.4.3
+    # via alembic
+markupsafe==3.0.4
+    # via
+    #   jinja2
+    #   mako
+msal==1.39.0
+    # via
+    #   azure-identity
+    #   msal-extensions
+msal-extensions==1.3.1
+    # via azure-identity
+opentelemetry-api==1.45.2
+    # via
+    #   fastapi
+    #   google-api-core
+packaging==26.3
+    # via kombu
+prompt-toolkit==3.0.53
+    # via click-repl
+proto-plus==1.29.0
+    # via
+    #   google-api-core
+    #   google-cloud-compute
+    #   google-cloud-resource-manager
+protobuf==7.36.2
+    # via
+    #   google-api-core
+    #   google-cloud-compute
+    #   google-cloud-resource-manager
+    #   googleapis-common-protos
+    #   grpc-google-iam-v1
+    #   grpcio-status
+    #   proto-plus
+psycopg==3.3.8
+    # via mcmp-backend (pyproject.toml)
+psycopg-binary==3.3.8
+    # via psycopg
+pyasn1==0.6.5
+    # via pyasn1-modules
+pyasn1-modules==0.4.2
+    # via google-auth
+pycparser==3.12
+    # via cffi
+pydantic==2.14.3
+    # via
+    #   mcmp-backend (pyproject.toml)
+    #   fastapi
+    #   pydantic-settings
+pydantic-core==2.50.4
+    # via pydantic
+pydantic-settings==2.16.2
+    # via mcmp-backend (pyproject.toml)
+pyjwt==2.15.1
+    # via
+    #   mcmp-backend (pyproject.toml)
+    #   msal
+python-dateutil==2.9.0.post0
+    # via
+    #   botocore
+    #   celery
+python-dotenv==1.2.4
+    # via
+    #   pydantic-settings
+    #   uvicorn
+python-multipart==0.0.33
+    # via mcmp-backend (pyproject.toml)
+pyyaml==6.0.3
+    # via uvicorn
+redis==8.1.0
+    # via
+    #   mcmp-backend (pyproject.toml)
+    #   kombu
+requests==2.34.2
+    # via
+    #   azure-core
+    #   google-api-core
+    #   google-cloud-storage
+    #   msal
+s3transfer==0.19.3
+    # via boto3
+six==1.17.0
+    # via python-dateutil
+sqlalchemy==2.1.8
+    # via
+    #   mcmp-backend (pyproject.toml)
+    #   alembic
+starlette==1.10.0
+    # via fastapi
+typing-extensions==4.16.0
+    # via
+    #   alembic
+    #   anyio
+    #   azure-core
+    #   azure-identity
+    #   azure-mgmt-compute
+    #   azure-mgmt-resource
+    #   azure-mgmt-storage
+    #   click-repl
+    #   fastapi
+    #   grpcio
+    #   opentelemetry-api
+    #   psycopg
+    #   pydantic
+    #   pydantic-core
+    #   pydantic-settings
+    #   sqlalchemy
+    #   starlette
+    #   typing-inspection
+typing-inspection==0.4.5
+    # via
+    #   fastapi
+    #   pydantic
+    #   pydantic-settings
+tzdata==2026.6
+    # via
+    #   kombu
+    #   psycopg
+    #   tzlocal
+tzlocal==5.4.5
+    # via celery
+urllib3==2.8.0
+    # via
+    #   botocore
+    #   requests
+uvicorn==0.54.0
+    # via mcmp-backend (pyproject.toml)
+vine==5.1.0
+    # via
+    #   amqp
+    #   celery
+    #   kombu
+watchfiles==1.3.0
+    # via uvicorn
+wcwidth==0.9.4
+    # via prompt-toolkit
+websockets==17.4
+    # via uvicorn

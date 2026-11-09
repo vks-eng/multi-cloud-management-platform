@@ -1,0 +1,2 @@
+# CloudOrbit backend dev/test dependencies
+-r backend/requirements-dev.txt

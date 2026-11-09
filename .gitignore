@@ -1,0 +1,93 @@
+# ---------------------------------------------------------------- Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+.eggs/
+build/
+dist/
+pip-wheel-metadata/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# ---------------------------------------------------------------- Secrets / environment
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+service-account*.json
+*.kubeconfig
+
+# ---------------------------------------------------------------- Test / coverage / tooling caches
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.hypothesis/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+junit*.xml
+mutants/
+.mutmut-cache
+
+# Schemathesis / Locust output
+.schemathesis/
+locust_*.csv
+locust_*.html
+
+# ---------------------------------------------------------------- Node / frontend
+node_modules/
+frontend/dist/
+frontend/coverage/
+*.tsbuildinfo
+.vite/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Playwright / Lighthouse
+playwright-report/
+test-results/
+blob-report/
+playwright/.cache/
+.lighthouseci/
+
+# ---------------------------------------------------------------- Local databases / runtime data
+*.db
+*.sqlite3
+pgdata/
+.pgdata/
+pgserver_data/
+celerybeat-schedule*
+celerybeat.pid
+*.log
+
+# ---------------------------------------------------------------- Terraform (generated runs, state, providers)
+.terraform-runs/
+backend/.terraform-runs/
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+tfplan
+crash.log
+*.tfvars
+!*.tfvars.example
+.terraform.lock.hcl
+
+
+# ---------------------------------------------------------------- Editors / OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
