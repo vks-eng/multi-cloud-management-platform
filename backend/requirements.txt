@@ -82,7 +82,7 @@ pydantic-settings==2.16.2
     # via mcmp-backend (pyproject.toml)
 pyjwt==2.15.1
     # via mcmp-backend (pyproject.toml)
-python-dateutil==2.9.0.post0
+python-dateutil==4.0.0
     # via celery
 python-dotenv==1.2.4
     # via

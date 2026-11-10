@@ -114,7 +114,7 @@ pytest==9.2.0
     #   pytest-cov
 pytest-cov==7.1.0
     # via mcmp-backend (pyproject.toml)
-python-dateutil==2.9.0.post0
+python-dateutil==4.0.0
     # via celery
 python-dotenv==1.2.4
     # via
