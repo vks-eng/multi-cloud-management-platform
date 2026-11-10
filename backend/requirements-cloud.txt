@@ -196,7 +196,7 @@ pyjwt==2.15.1
     # via
     #   mcmp-backend (pyproject.toml)
     #   msal
-python-dateutil==2.9.0.post0
+python-dateutil==4.0.0
     # via
     #   botocore
     #   celery
