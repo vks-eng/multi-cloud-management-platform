@@ -43,10 +43,10 @@ dev = [
     "pytest-cov>=5.0",
     "httpx>=0.27",
     "ruff>=0.7",
-    # Embedded PostgreSQL binaries for running the test-suite without a local server.
-    # Wheels exist for CPython <= 3.12; on newer interpreters set TEST_DATABASE_URL or PG_BIN_DIR.
-    "pgserver>=0.1.4; python_version < '3.13'",
 ]
+# Optional: embedded PostgreSQL binaries so the test-suite can run without a local server.
+# Wheels exist for CPython <= 3.12 only. CI does not use it (it sets TEST_DATABASE_URL).
+localpg = ["pgserver>=0.1.4; python_version < '3.13'"]
 
 [tool.setuptools.packages.find]
 include = ["app*"]

@@ -318,11 +318,12 @@ Defined in `app/core/permissions.py` and exposed at `GET /api/v1/users/roles`. T
 
 - **Stack**: Vite + React 18 + TypeScript (strict), Tailwind CSS, TanStack React Query, React Router v6, Recharts, lucide-react icons.
 - **API client** (`src/api/client.ts`): a typed `fetch` wrapper that adds the bearer token, parses the error envelope into an `ApiError`, and clears the session on 401. Endpoint functions and response types live in `src/api/`.
-- **Auth** (`src/auth/`): `AuthProvider` keeps the token in `sessionStorage`, loads `/auth/me`, and exposes `hasPermission()` built from the same role matrix. `ProtectedRoute` redirects unauthenticated users to `/login`.
-- **Data fetching**: React Query hooks per module, with query keys per resource, cache invalidation after mutations, and polling for sync jobs.
-- **Design system** (`src/components/ui/`): `Button`, `Card`, `Badge`/`StatusBadge`, `ProviderBadge`, `StatCard`, `DataTable`, `Modal`, `Input`/`Select`, `EmptyState`, `Spinner`, `PageHeader`, sharing Tailwind tokens.
+- **Auth** (`src/auth/`): `AuthProvider` keeps the token in `sessionStorage`, loads `/auth/me`, and exposes `can(permission)` built from a mirror of the role matrix (`src/auth/permissions.ts`). `ProtectedRoute` redirects unauthenticated users to `/login`.
+- **Data fetching**: `useQuery`/`useMutation` per page with query keys per resource, cache invalidation after mutations, and a 60-second refresh on the overview. Sync jobs return their final state synchronously in eager mode; there is no client-side job polling yet.
+- **Design system** (`src/components/ui/`): `Button`, `Card`, `StatCard`, `PageHeader`, `Spinner`, `EmptyState`, `ErrorState`, `CodeBlock`, `Badge`/`StatusBadge`/`ProviderBadge`, `TextField`/`SelectField`, `Modal`, `DataTable`/`Pagination`. They share dark-first Tailwind tokens (`canvas`, `surface`, `line`, `ink`, `muted`, `orbit`, `nebula`) defined in `tailwind.config.js`, and chart styling lives in `src/components/charts.ts`.
 - **Layout**: a responsive sidebar (collapsible on mobile) and top bar with the user menu.
-- **Pages**: Login, Register, Overview, Cloud Accounts, Resources, Infrastructure, Costs, Monitoring, Activity, Settings.
+- **Pages** (10): Login, Register, Overview, Cloud accounts, Inventory, Infrastructure, Cost analytics, Monitoring, Activity logs, Settings (profile, password, users, role matrix).
+- **Tests**: Vitest + React Testing Library, 46 tests (helpers, components, and whole pages with a mocked API module).
 
 ## 12. Design decisions and trade-offs
 

@@ -58,9 +58,9 @@ Teams running workloads on more than one cloud usually end up with three console
 - **Cloud integration**: boto3, Azure SDK and Google Cloud client adapters behind a common interface
 - **Infrastructure as Code**: Jinja2 to HCL rendering with injection-safe escaping, a Terraform plan/apply runner, a confirmation gate
 - **Background processing**: Celery tasks and a beat schedule with Redis, plus an eager in-process mode for development and tests
-- **Frontend engineering**: React 18, TypeScript, React Query, React Router protected routes, Tailwind design system, Recharts dashboards
-- **Testing**: Pytest against real PostgreSQL, Vitest + React Testing Library
-- **DevOps**: Dockerfiles, Docker Compose, GitHub Actions CI with a Postgres service, CodeQL, Dependabot, pre-commit, Makefile
+- **Frontend engineering**: React 18, TypeScript, React Query, React Router protected routes, a dark-first Tailwind design system, Recharts dashboards
+- **Testing**: 88 Pytest tests against real PostgreSQL (91% coverage), 46 Vitest + React Testing Library tests
+- **DevOps**: multi-stage non-root Dockerfiles, Docker Compose, GitHub Actions CI with a Postgres service, Dependabot, Makefile
 
 ## Architecture
 
@@ -108,15 +108,17 @@ See **[ARCHITECTURE.md](ARCHITECTURE.md)** for container and sequence diagrams, 
 
 ## Screenshots
 
-> Placeholders: capture these from the seeded demo (see [docs/screenshots/README.md](docs/screenshots/README.md)).
+Captured from the running app (FastAPI + PostgreSQL with seeded mock-provider data, Vite production build) in Microsoft Edge at 1440×900.
 
-| Overview | Resource inventory |
+| Overview dashboard | Resource inventory |
 |---|---|
-| ![Overview dashboard](docs/screenshots/overview.png) | ![Resource inventory](docs/screenshots/resources.png) |
-| **Terraform plan & confirm** | **Cost analytics** |
-| ![Provisioning](docs/screenshots/infrastructure.png) | ![Costs](docs/screenshots/costs.png) |
-| **Cloud accounts** | **Activity logs** |
-| ![Accounts](docs/screenshots/accounts.png) | ![Activity](docs/screenshots/activity.png) |
+| ![Overview dashboard](docs/screenshots/dashboard.png) | ![Resource inventory](docs/screenshots/inventory.png) |
+| **Terraform plan → confirm** | **Cost analytics** |
+| ![Terraform plan and confirmation](docs/screenshots/terraform-plan.png) | ![Cost analytics](docs/screenshots/costs.png) |
+| **Monitoring & alerts** | **Audit logs** |
+| ![Monitoring](docs/screenshots/monitoring.png) | ![Audit logs](docs/screenshots/audit-logs.png) |
+| **Sign in** | **OpenAPI / Swagger UI (`/docs`)** |
+| ![Login](docs/screenshots/login.png) | ![Swagger UI](docs/screenshots/swagger.png) |
 
 ## Tech stack
 
@@ -129,7 +131,7 @@ See **[ARCHITECTURE.md](ARCHITECTURE.md)** for container and sequence diagrams, 
 | IaC | Terraform (HCL generated from Jinja2 templates) |
 | Frontend | React 18, TypeScript, Vite, Tailwind CSS, TanStack React Query, React Router, Recharts, lucide-react |
 | Testing | Pytest, pytest-cov, Vitest, React Testing Library, jsdom |
-| DevOps | Docker, Docker Compose, GitHub Actions, CodeQL, Dependabot, pre-commit, Ruff, ESLint |
+| DevOps | Docker, Docker Compose, GitHub Actions, Dependabot, Ruff, ESLint |
 
 ## Quick start
 
@@ -145,6 +147,8 @@ docker compose exec api python -m app.seed   # optional demo data (mock provider
 - API docs (Swagger UI): http://localhost:8000/docs · ReDoc: http://localhost:8000/redoc
 
 The API container runs `alembic upgrade head` on start.
+
+> The Dockerfiles and compose file are written to production conventions (multi-stage builds, non-root users, health checks), but they were **not built in the author's environment** (no Docker there). CI tests the code, not the images. Please report any issue with the first `docker compose up`.
 
 ### Option B: Local development
 
@@ -217,7 +221,7 @@ python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().d
 
 ## API overview
 
-Interactive docs: **`/docs`** (Swagger UI) and **`/redoc`**. Full reference with examples and error codes: **[docs/API.md](docs/API.md)**. Postman: **[postman_collection.json](postman_collection.json)**.
+Interactive docs: **`/docs`** (Swagger UI) and **`/redoc`**. Endpoint reference with error codes: **[docs/API.md](docs/API.md)**. Postman: **[postman_collection.json](postman_collection.json)**.
 
 All routes are prefixed with `/api/v1`. Errors use one envelope: `{"error": {"code", "message", "details"}}`.
 
@@ -285,19 +289,41 @@ cd backend && pytest --cov=app        # needs PostgreSQL (see below)
 cd frontend && npm test && npm run typecheck && npm run lint && npm run build
 ```
 
-The backend suite runs **only against PostgreSQL**. The fixtures pick a database in this order:
+The backend suite runs **only against PostgreSQL**, never SQLite. The fixtures pick a database in this order:
 
 1. `TEST_DATABASE_URL` if set (CI uses a `postgres:16` service container),
-2. an embedded throwaway server from the `pgserver` package (Python ≤ 3.12),
+2. an embedded throwaway server from the optional `pgserver` package (`pip install -e ".[localpg]"`, Python ≤ 3.12),
 3. a throwaway cluster created with `initdb`/`pg_ctl` from `PG_BIN_DIR`.
 
-Migrations are applied with `alembic upgrade head` at session start, so tests also exercise the migration.
+Each session starts with `alembic downgrade base` then `alembic upgrade head`, so the migration itself is exercised on every run.
 
-| Suite | Result |
-|---|---|
-| Backend (pytest) | TBD |
-| Backend coverage | TBD |
-| Frontend (Vitest + RTL) | TBD |
+### Results (local run, 2026-11-10)
+
+| Suite | Tests | Result |
+|---|---|---|
+| Backend: API integration (auth, accounts, inventory, provisioning incl. 6 template-render checks, costs) | 50 | passed |
+| Backend: RBAC (role × endpoint matrix generated from the permission map, plus targeted cases) | 22 | passed |
+| Backend: unit (crypto + key rotation, redaction, settings guards, HCL escaping, mock adapter, runner, seed) | 16 | passed |
+| **Backend total** | **88** | **88 passed · 91% line coverage (`pytest --cov=app`)** |
+| Frontend: unit (format helpers, API client) | 12 | passed |
+| Frontend: components (Button, badges, cards, fields, modal, table, pagination, RBAC helper) | 12 | passed |
+| Frontend: pages (login/logout, dashboard states, RBAC-hidden actions, accounts, inventory, plan → confirm, costs, monitoring, activity, settings) | 22 | passed |
+| **Frontend total** | **46** | **46 passed · 77% statement coverage (`vitest --coverage`)** |
+
+Static checks in the same run: `ruff check` and `ruff format --check` clean, `eslint` clean (0 warnings), `tsc --noEmit` clean, `vite build` succeeds.
+
+### Testing strategy
+
+```mermaid
+flowchart TB
+  e2e["Journey tests through the API<br/>plan → wrong token/name rejected → apply → audit"]
+  page["Page tests (RTL)<br/>whole pages with React Query + mocked API"]
+  integ["API integration tests<br/>FastAPI TestClient + real PostgreSQL + Alembic"]
+  unit["Unit tests<br/>crypto, redaction, settings, HCL renderer, adapters, formatters, components"]
+  e2e --> page --> integ --> unit
+```
+
+Not automated yet (and not claimed): browser E2E (Playwright), load testing, DAST and mutation testing. See [TESTING.md](TESTING.md) for the full matrix.
 
 ## Deployment
 
@@ -328,13 +354,13 @@ multi-cloud-management-platform/
 │   └── Dockerfile
 ├── frontend/
 │   ├── src/
-│   │   ├── api/              # typed API client + React Query hooks
-│   │   ├── components/       # design-system components + layout
+│   │   ├── api/              # typed fetch client, endpoint functions, response types
+│   │   ├── components/       # dark-first design system (ui/), layout, chart theme
 │   │   ├── pages/            # route pages
-│   │   └── test/             # Vitest + RTL tests
+│   │   └── test/             # test setup, fixtures, render helpers
 │   └── Dockerfile
 ├── docs/                     # API, deployment, cloud providers, screenshots
-├── .github/                  # CI, CodeQL, Dependabot, templates
+├── .github/                  # CI workflow, Dependabot, issue/PR templates
 ├── docker-compose.yml
 ├── database_schema.sql       # generated reference DDL
 ├── postman_collection.json

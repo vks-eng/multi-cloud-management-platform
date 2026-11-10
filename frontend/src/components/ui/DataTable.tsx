@@ -31,7 +31,7 @@ export function DataTable<T>({
   if (rows.length === 0) return <EmptyState title={emptyTitle} description={emptyDescription} />;
   return (
     <div className="-mx-5 overflow-x-auto">
-      <table className="min-w-full divide-y divide-slate-200 text-sm">
+      <table className="min-w-full divide-y divide-line text-sm">
         {caption && <caption className="sr-only">{caption}</caption>}
         <thead>
           <tr>
@@ -40,7 +40,7 @@ export function DataTable<T>({
                 key={c.key}
                 scope="col"
                 className={clsx(
-                  'whitespace-nowrap px-5 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500',
+                  'whitespace-nowrap px-5 py-2 text-left text-[11px] font-semibold uppercase tracking-wider text-faint',
                   c.hideOnMobile && 'hidden md:table-cell',
                   c.className,
                 )}
@@ -50,21 +50,17 @@ export function DataTable<T>({
             ))}
           </tr>
         </thead>
-        <tbody className="divide-y divide-slate-100">
+        <tbody className="divide-y divide-line/60">
           {rows.map((row) => (
             <tr
               key={rowKey(row)}
-              className={clsx(onRowClick && 'cursor-pointer hover:bg-slate-50')}
+              className={clsx(onRowClick && 'cursor-pointer hover:bg-elevated/70')}
               onClick={onRowClick ? () => onRowClick(row) : undefined}
             >
               {columns.map((c) => (
                 <td
                   key={c.key}
-                  className={clsx(
-                    'px-5 py-2.5 align-top text-slate-700',
-                    c.hideOnMobile && 'hidden md:table-cell',
-                    c.className,
-                  )}
+                  className={clsx('px-5 py-2.5 align-top text-ink/90', c.hideOnMobile && 'hidden md:table-cell', c.className)}
                 >
                   {c.render(row)}
                 </td>
@@ -92,7 +88,7 @@ export function Pagination({
   const page = Math.floor(offset / limit) + 1;
   const pages = Math.max(1, Math.ceil(total / limit));
   return (
-    <nav className="mt-4 flex items-center justify-between text-sm text-slate-600" aria-label="Pagination">
+    <nav className="mt-4 flex items-center justify-between text-sm text-muted" aria-label="Pagination">
       <span>
         Page {page} of {pages} · {total} items
       </span>

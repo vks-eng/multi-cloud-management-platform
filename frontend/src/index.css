@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  @apply bg-canvas font-sans text-ink antialiased;
+}
+
+/* Subtle starfield/orbit backdrop for the auth screens. */
+.orbit-backdrop {
+  background:
+    radial-gradient(ellipse 60% 40% at 70% 10%, rgba(139, 92, 246, 0.18), transparent 60%),
+    radial-gradient(ellipse 50% 40% at 10% 90%, rgba(34, 211, 238, 0.14), transparent 60%),
+    #0a0f1e;
+}
+
+::selection {
+  background: rgba(34, 211, 238, 0.35);
+}
+
+/* Thin dark scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #243050 transparent;
+}
+
+.recharts-tooltip-wrapper .recharts-default-tooltip {
+  border-radius: 0.5rem;
+}

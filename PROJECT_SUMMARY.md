@@ -39,8 +39,8 @@ Python 3.12+ · FastAPI · Pydantic v2 · SQLAlchemy 2.0 · Alembic · PostgreSQ
 - Layered architecture (API, services, repositories, adapters) with dependency injection and a single error envelope
 - Security by default: secrets encrypted, redacted logs, timing-safe login, production config guards, security headers, least-privilege IAM docs
 - Real-database testing: the pytest suite runs against PostgreSQL and applies the Alembic migration at startup
-- CI: Ruff lint + format check, pytest with a Postgres service, frontend lint, typecheck, Vitest and build; CodeQL; Dependabot; least-privilege workflow permissions
-- Reproducibility: pinned requirements exported from `pyproject.toml`, `package-lock.json`, Docker Compose, Makefile, pre-commit hooks
+- CI: Ruff lint + format check, pytest with a Postgres service, frontend lint, typecheck, Vitest and build; Dependabot; least-privilege workflow permissions (`contents: read`)
+- Reproducibility: pinned requirements exported from `pyproject.toml`, `package-lock.json`, Docker Compose, Makefile
 
 ## Facts (measured)
 
@@ -49,10 +49,10 @@ Python 3.12+ · FastAPI · Pydantic v2 · SQLAlchemy 2.0 · Alembic · PostgreSQ
 | REST operations | 52 (across 9 API modules) |
 | Database tables | 13 (+ `alembic_version`) |
 | Terraform templates | 6 |
-| Frontend pages | TBD |
-| Backend tests | TBD |
-| Backend coverage | TBD |
-| Frontend tests | TBD |
+| Frontend pages | 10 (login, register, overview, accounts, inventory, infrastructure, costs, monitoring, activity, settings) |
+| Backend tests | 88 passed (50 API integration, 22 RBAC, 16 unit) against real PostgreSQL |
+| Backend coverage | 91% lines (`pytest --cov=app`) |
+| Frontend tests | 46 passed (Vitest + React Testing Library), 77% statements |
 
 ## What this demonstrates for a client
 

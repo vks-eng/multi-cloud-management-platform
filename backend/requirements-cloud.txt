@@ -1,5 +1,5 @@
-# Generated from pyproject.toml with: uv pip compile pyproject.toml --extra cloud -o requirements-cloud.txt
-# Install: pip install -r requirements-cloud.txt
+# Pinned, generated from pyproject.toml with:
+#   uv pip compile pyproject.toml --universal --python-version 3.12 --extra aws --extra azure --extra gcp -o requirements-cloud.txt
 alembic==1.20.1
     # via mcmp-backend (pyproject.toml)
 amqp==5.4.2
@@ -33,9 +33,9 @@ bcrypt==5.0.0
     # via mcmp-backend (pyproject.toml)
 billiard==4.3.2
     # via celery
-boto3==1.43.126
+boto3==1.43.127
     # via mcmp-backend (pyproject.toml)
-botocore==1.43.126
+botocore==1.43.127
     # via
     #   boto3
     #   s3transfer
@@ -43,7 +43,7 @@ celery==5.7.0
     # via mcmp-backend (pyproject.toml)
 certifi==2026.10.23
     # via requests
-cffi==2.1.1
+cffi==2.1.1 ; platform_python_implementation != 'PyPy'
     # via cryptography
 charset-normalizer==3.5.2
     # via requests
@@ -71,7 +71,7 @@ dnspython==2.9.2
     # via email-validator
 email-validator==2.3.0
     # via mcmp-backend (pyproject.toml)
-fastapi==0.162.2
+fastapi==0.162.3
     # via mcmp-backend (pyproject.toml)
 google-api-core==2.44.0
     # via
@@ -175,13 +175,13 @@ protobuf==7.36.2
     #   proto-plus
 psycopg==3.3.8
     # via mcmp-backend (pyproject.toml)
-psycopg-binary==3.3.8
+psycopg-binary==3.3.8 ; implementation_name != 'pypy'
     # via psycopg
 pyasn1==0.6.5
     # via pyasn1-modules
 pyasn1-modules==0.4.2
     # via google-auth
-pycparser==3.12
+pycparser==3.12 ; implementation_name != 'PyPy' and platform_python_implementation != 'PyPy'
     # via cffi
 pydantic==2.14.3
     # via
@@ -253,7 +253,7 @@ typing-inspection==0.4.5
     #   fastapi
     #   pydantic
     #   pydantic-settings
-tzdata==2026.6
+tzdata==2026.6 ; sys_platform == 'win32'
     # via
     #   kombu
     #   psycopg
@@ -266,6 +266,8 @@ urllib3==2.8.0
     #   requests
 uvicorn==0.54.0
     # via mcmp-backend (pyproject.toml)
+uvloop==0.23.0 ; platform_python_implementation != 'PyPy' and sys_platform != 'cygwin' and sys_platform != 'win32'
+    # via uvicorn
 vine==5.1.0
     # via
     #   amqp

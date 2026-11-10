@@ -73,6 +73,7 @@ def require(permission: Permission) -> Callable[[User], User]:
             )
         return user
 
+    _checker.permission = permission  # type: ignore[attr-defined]  # introspected by tests
     return _checker
 
 

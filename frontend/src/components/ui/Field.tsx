@@ -2,8 +2,8 @@ import clsx from 'clsx';
 import { useId, type InputHTMLAttributes, type ReactNode, type SelectHTMLAttributes } from 'react';
 
 const CONTROL =
-  'block w-full rounded-md border-0 py-1.5 px-2.5 text-sm text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 ' +
-  'placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-brand-600 disabled:bg-slate-50';
+  'block w-full rounded-lg border-0 bg-canvas py-2 px-3 text-sm text-ink ring-1 ring-inset ring-line ' +
+  'placeholder:text-faint focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orbit-400 disabled:opacity-60';
 
 interface FieldShellProps {
   label: string;
@@ -15,19 +15,19 @@ interface FieldShellProps {
 function Help({ id, error, hint }: { id: string; error?: string; hint?: ReactNode }) {
   if (error) {
     return (
-      <p id={`${id}-error`} className="mt-1 text-xs text-rose-700">
+      <p id={`${id}-error`} className="mt-1 text-xs text-rose-300">
         {error}
       </p>
     );
   }
-  return hint ? <p className="mt-1 text-xs text-slate-500">{hint}</p> : null;
+  return hint ? <p className="mt-1 text-xs text-muted">{hint}</p> : null;
 }
 
 export function TextField({ label, error, hint, className, ...rest }: FieldShellProps & InputHTMLAttributes<HTMLInputElement>) {
   const id = useId();
   return (
     <div className={className}>
-      <label htmlFor={id} className="block text-xs font-medium text-slate-700">
+      <label htmlFor={id} className="block text-xs font-medium text-muted">
         {label}
       </label>
       <input
@@ -58,7 +58,7 @@ export function SelectField({
   const id = useId();
   return (
     <div className={className}>
-      <label htmlFor={id} className="block text-xs font-medium text-slate-700">
+      <label htmlFor={id} className="block text-xs font-medium text-muted">
         {label}
       </label>
       <select

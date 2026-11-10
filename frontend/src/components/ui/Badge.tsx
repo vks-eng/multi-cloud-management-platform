@@ -2,15 +2,15 @@ import clsx from 'clsx';
 import type { ReactNode } from 'react';
 import { providerLabel } from '../../lib/format';
 
-export type Tone = 'gray' | 'green' | 'amber' | 'red' | 'blue' | 'indigo';
+export type Tone = 'gray' | 'green' | 'amber' | 'red' | 'blue' | 'violet';
 
 const TONES: Record<Tone, string> = {
-  gray: 'bg-slate-100 text-slate-700 ring-slate-200',
-  green: 'bg-emerald-50 text-emerald-800 ring-emerald-200',
-  amber: 'bg-amber-50 text-amber-800 ring-amber-200',
-  red: 'bg-rose-50 text-rose-800 ring-rose-200',
-  blue: 'bg-sky-50 text-sky-800 ring-sky-200',
-  indigo: 'bg-brand-50 text-brand-700 ring-brand-200',
+  gray: 'bg-slate-500/15 text-slate-300 ring-slate-500/30',
+  green: 'bg-emerald-500/15 text-emerald-300 ring-emerald-500/30',
+  amber: 'bg-amber-500/15 text-amber-300 ring-amber-500/30',
+  red: 'bg-rose-500/15 text-rose-300 ring-rose-500/30',
+  blue: 'bg-sky-500/15 text-sky-300 ring-sky-500/30',
+  violet: 'bg-nebula-500/15 text-nebula-300 ring-nebula-500/30',
 };
 
 export function Badge({ tone = 'gray', children, className }: { tone?: Tone; children: ReactNode; className?: string }) {
@@ -52,7 +52,7 @@ const STATUS_TONES: Record<string, Tone> = {
   deleted: 'gray',
   cancelled: 'gray',
   expired: 'gray',
-  info: 'indigo',
+  info: 'violet',
 };
 
 export function statusTone(status: string): Tone {
@@ -69,17 +69,17 @@ export function StatusBadge({ status }: { status: string }) {
 }
 
 const PROVIDER_STYLES: Record<string, string> = {
-  aws: 'bg-orange-50 text-orange-900 ring-orange-200',
-  azure: 'bg-sky-50 text-sky-900 ring-sky-200',
-  gcp: 'bg-emerald-50 text-emerald-900 ring-emerald-200',
+  aws: 'bg-amber-500/15 text-amber-300 ring-amber-500/30',
+  azure: 'bg-sky-500/15 text-sky-300 ring-sky-500/30',
+  gcp: 'bg-emerald-500/15 text-emerald-300 ring-emerald-500/30',
 };
 
 export function ProviderBadge({ provider }: { provider: string | null | undefined }) {
   return (
     <span
       className={clsx(
-        'inline-flex items-center rounded px-1.5 py-0.5 text-xs font-semibold ring-1 ring-inset',
-        PROVIDER_STYLES[provider ?? ''] ?? 'bg-slate-100 text-slate-700 ring-slate-200',
+        'inline-flex items-center rounded-md px-1.5 py-0.5 text-xs font-semibold tracking-wide ring-1 ring-inset',
+        PROVIDER_STYLES[provider ?? ''] ?? TONES.gray,
       )}
     >
       {providerLabel(provider)}

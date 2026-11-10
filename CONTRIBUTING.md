@@ -14,10 +14,11 @@ Thanks for your interest in improving CloudOrbit! 🎉
 ## Development Workflow
 
 - **Code style:** Python is linted and formatted with [Ruff](https://docs.astral.sh/ruff/).
-  Run `ruff check .` and `ruff format .` before committing.
+  Run `ruff check .` and `ruff format .` before committing. The frontend uses ESLint and strict TypeScript:
+  run `npm run lint`, `npm run typecheck` and `npm test` in `frontend/` (or `make lint test`).
 - **Tests:** add or update tests for every change and make sure the full suite passes.
 - **Migrations:** schema changes require an Alembic migration
-  (`alembic revision --autogenerate -m "describe change"`) — review the generated file before committing.
+  (`alembic revision --autogenerate -m "describe change"`); review the generated file before committing.
 - **Secrets:** never commit credentials, tokens or `.env` files.
 
 ## Commit Messages
@@ -25,8 +26,8 @@ Thanks for your interest in improving CloudOrbit! 🎉
 Use [Conventional Commits](https://www.conventionalcommits.org/):
 
 ```
-feat: add task due-date reminders
-fix: reject expired refresh tokens
+feat: add RDS instances to the AWS inventory
+fix: reject replayed provisioning confirmation tokens
 docs: clarify docker setup
 ```
 

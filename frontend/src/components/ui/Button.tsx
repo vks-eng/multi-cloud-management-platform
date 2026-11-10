@@ -5,11 +5,12 @@ type Variant = 'primary' | 'secondary' | 'danger' | 'ghost';
 type Size = 'sm' | 'md';
 
 const VARIANTS: Record<Variant, string> = {
-  primary: 'bg-brand-600 text-white hover:bg-brand-700 focus-visible:outline-brand-600 disabled:bg-brand-200',
+  primary:
+    'bg-orbit-400 text-canvas hover:bg-orbit-300 focus-visible:outline-orbit-300 disabled:bg-orbit-700 disabled:text-ink/60',
   secondary:
-    'bg-white text-slate-700 ring-1 ring-inset ring-slate-300 hover:bg-slate-50 focus-visible:outline-brand-600 disabled:text-slate-400',
-  danger: 'bg-rose-600 text-white hover:bg-rose-700 focus-visible:outline-rose-600 disabled:bg-rose-200',
-  ghost: 'text-slate-600 hover:bg-slate-100 focus-visible:outline-brand-600 disabled:text-slate-300',
+    'bg-elevated text-ink ring-1 ring-inset ring-line hover:bg-line focus-visible:outline-orbit-300 disabled:text-faint',
+  danger: 'bg-rose-500 text-white hover:bg-rose-400 focus-visible:outline-rose-300 disabled:bg-rose-900',
+  ghost: 'text-muted hover:bg-elevated hover:text-ink focus-visible:outline-orbit-300 disabled:text-faint',
 };
 
 const SIZES: Record<Size, string> = {
@@ -39,7 +40,7 @@ export function Button({
     <button
       type={type}
       className={clsx(
-        'inline-flex items-center justify-center gap-1.5 rounded-md font-medium shadow-sm transition-colors',
+        'inline-flex items-center justify-center gap-1.5 rounded-lg font-medium transition-colors',
         'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed',
         VARIANTS[variant],
         SIZES[size],

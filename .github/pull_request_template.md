@@ -18,7 +18,8 @@ Closes #
 
 ## Checklist
 
-- [ ] Lint passes (`ruff check .` / `ruff format --check .`)
+- [ ] Backend lint passes (`ruff check .` / `ruff format --check .`)
+- [ ] Frontend checks pass (`npm run lint`, `npm run typecheck`, `npm test`, `npm run build`)
 - [ ] Tests added/updated and passing
 - [ ] Alembic migration included for schema changes
 - [ ] Docs / README updated if behaviour changed

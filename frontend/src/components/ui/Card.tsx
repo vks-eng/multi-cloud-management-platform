@@ -19,20 +19,28 @@ export function Card({
   bodyClassName?: string;
 }) {
   return (
-    <section className={clsx('rounded-xl border border-slate-200 bg-white shadow-sm', className)}>
+    <section className={clsx('rounded-2xl border border-line bg-surface', className)}>
       {(title || actions) && (
-        <header className="flex flex-wrap items-start justify-between gap-2 border-b border-slate-100 px-5 py-4">
+        <header className="flex flex-wrap items-start justify-between gap-2 border-b border-line/70 px-5 py-4">
           <div>
-            {title && <h2 className="text-sm font-semibold text-slate-900">{title}</h2>}
-            {description && <p className="mt-0.5 text-xs text-slate-500">{description}</p>}
+            {title && <h2 className="text-sm font-semibold text-ink">{title}</h2>}
+            {description && <p className="mt-0.5 text-xs text-muted">{description}</p>}
           </div>
-          {actions && <div className="flex items-center gap-2">{actions}</div>}
+          {actions && <div className="flex flex-wrap items-center gap-2">{actions}</div>}
         </header>
       )}
       <div className={clsx('p-5', bodyClassName)}>{children}</div>
     </section>
   );
 }
+
+const STAT_TONES = {
+  default: 'text-orbit-300 bg-orbit-400/10',
+  warning: 'text-amber-300 bg-amber-400/10',
+  danger: 'text-rose-300 bg-rose-400/10',
+  success: 'text-emerald-300 bg-emerald-400/10',
+  violet: 'text-nebula-300 bg-nebula-400/10',
+} as const;
 
 export function StatCard({
   label,
@@ -45,29 +53,20 @@ export function StatCard({
   value: ReactNode;
   hint?: ReactNode;
   icon?: ReactNode;
-  tone?: 'default' | 'warning' | 'danger' | 'success';
+  tone?: keyof typeof STAT_TONES;
 }) {
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
-      <div className="flex items-center justify-between">
-        <p className="text-xs font-medium uppercase tracking-wide text-slate-500">{label}</p>
+    <div className="rounded-2xl border border-line bg-surface p-4">
+      <div className="flex items-center justify-between gap-2">
+        <p className="text-xs font-medium uppercase tracking-wider text-muted">{label}</p>
         {icon && (
-          <span
-            className={clsx(
-              'rounded-lg p-1.5',
-              tone === 'warning' && 'bg-amber-50 text-amber-700',
-              tone === 'danger' && 'bg-rose-50 text-rose-700',
-              tone === 'success' && 'bg-emerald-50 text-emerald-700',
-              tone === 'default' && 'bg-brand-50 text-brand-700',
-            )}
-            aria-hidden
-          >
+          <span className={clsx('rounded-lg p-1.5', STAT_TONES[tone])} aria-hidden>
             {icon}
           </span>
         )}
       </div>
-      <p className="mt-2 text-2xl font-semibold text-slate-900">{value}</p>
-      {hint && <p className="mt-1 text-xs text-slate-500">{hint}</p>}
+      <p className="mt-2 text-2xl font-semibold tabular-nums text-ink">{value}</p>
+      {hint && <div className="mt-1 text-xs text-muted">{hint}</div>}
     </div>
   );
 }
@@ -76,8 +75,8 @@ export function PageHeader({ title, description, actions }: { title: string; des
   return (
     <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
       <div>
-        <h1 className="text-xl font-semibold text-slate-900 sm:text-2xl">{title}</h1>
-        {description && <p className="mt-1 text-sm text-slate-500">{description}</p>}
+        <h1 className="text-xl font-semibold tracking-tight text-ink sm:text-2xl">{title}</h1>
+        {description && <p className="mt-1 text-sm text-muted">{description}</p>}
       </div>
       {actions && <div className="flex flex-wrap items-center gap-2">{actions}</div>}
     </div>
@@ -86,8 +85,8 @@ export function PageHeader({ title, description, actions }: { title: string; des
 
 export function Spinner({ label = 'Loading', className }: { label?: string; className?: string }) {
   return (
-    <div role="status" aria-live="polite" className={clsx('flex items-center gap-2 text-sm text-slate-500', className)}>
-      <span className="h-4 w-4 animate-spin rounded-full border-2 border-slate-300 border-t-brand-600" aria-hidden />
+    <div role="status" aria-live="polite" className={clsx('flex items-center gap-2 text-sm text-muted', className)}>
+      <span className="h-4 w-4 animate-spin rounded-full border-2 border-line border-t-orbit-400" aria-hidden />
       <span>{label}…</span>
     </div>
   );
@@ -95,9 +94,9 @@ export function Spinner({ label = 'Loading', className }: { label?: string; clas
 
 export function EmptyState({ title, description, action }: { title: string; description?: string; action?: ReactNode }) {
   return (
-    <div className="flex flex-col items-center justify-center rounded-lg border border-dashed border-slate-300 px-6 py-10 text-center">
-      <p className="text-sm font-semibold text-slate-800">{title}</p>
-      {description && <p className="mt-1 max-w-md text-sm text-slate-500">{description}</p>}
+    <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-line px-6 py-10 text-center">
+      <p className="text-sm font-semibold text-ink">{title}</p>
+      {description && <p className="mt-1 max-w-md text-sm text-muted">{description}</p>}
       {action && <div className="mt-4">{action}</div>}
     </div>
   );
@@ -113,7 +112,7 @@ export function ErrorState({ error, onRetry }: { error: unknown; onRetry?: () =>
   return (
     <div
       role="alert"
-      className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-800"
+      className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-200"
     >
       <span>{errorMessage(error)}</span>
       {onRetry && (
@@ -122,5 +121,17 @@ export function ErrorState({ error, onRetry }: { error: unknown; onRetry?: () =>
         </Button>
       )}
     </div>
+  );
+}
+
+export function CodeBlock({ children, label }: { children: string; label: string }) {
+  return (
+    <pre
+      aria-label={label}
+      tabIndex={0}
+      className="max-h-80 overflow-auto rounded-xl border border-line bg-canvas p-3 font-mono text-xs leading-relaxed text-orbit-50"
+    >
+      {children}
+    </pre>
   );
 }
