@@ -65,7 +65,7 @@ packaging==26.3
     # via kombu
 prompt-toolkit==3.0.53
     # via click-repl
-psycopg==3.3.8
+psycopg==3.3.9
     # via mcmp-backend (pyproject.toml)
 psycopg-binary==3.3.8 ; implementation_name != 'pypy'
     # via psycopg
