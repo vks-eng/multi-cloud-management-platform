@@ -35,7 +35,7 @@ billiard==4.3.2
     # via celery
 boto3==1.43.127
     # via mcmp-backend (pyproject.toml)
-botocore==1.43.127
+botocore==1.44.3
     # via
     #   boto3
     #   s3transfer
